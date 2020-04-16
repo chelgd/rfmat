@@ -1,4 +1,7 @@
 DO $do$
+	declare
+	arrow record;
+	
 BEGIN
 
 ----------------------Обновлённые технических таблиц----------------------
@@ -62,10 +65,9 @@ BEGIN
 	;
  
 ----------------------Добавление новых экземпляров сущности---------------------- 
-	declare
-	arrow record;
 	
-BEGIN
+
+	
 	FOR arrow IN (select max(bond_id) from tech.bonds_tech bt)..((select max(bond_id) from tech.bonds_tech bt) + (select count(*) from ods.bonds a
 																													left join tech.bonds_tech b 
 																													on a.name = b.src_id 
@@ -98,9 +100,7 @@ BEGIN
 	
 	commit;
 	
-	END LOOP;
-	
- 
+END LOOP;
  
  
 END;
