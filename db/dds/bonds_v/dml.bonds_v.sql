@@ -74,6 +74,33 @@ BEGIN
 
 
 ----------------------Вставляем новые экземпляры сущности---------------------- 
+
+	INSERT INTO dds.bonds_v 
+
+	with base as (select 
+						bond_id,
+						src_id
+				from tech.bonds_tech bt 
+					
+				where bond_id > (select max(bond_id) from dds.bonds_v)
+					)
+	
+	select 
+		a.bond_id,
+		b.name,
+		b.type,
+		b.nominal,
+		b.coupon_amount,   
+		to_date(b.coup_paym_date, 'dd.mm.yyyy') as coup_paym_date,
+		to_date(b.exp_date, 'dd.mm.yyyy') as exp_date
+	from base a
+	
+	left join ods.bonds b 
+	on a.src_id = b.name
+	;
+	
+
+
  
 END;
 $do$ 
