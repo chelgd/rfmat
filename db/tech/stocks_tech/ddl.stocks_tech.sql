@@ -3,4 +3,6 @@ CREATE TABLE tech.stocks_tech (
 	src_id text NULL,
 	hash text NULL,
 	sytsem_name text NULL
+	dml_type text null,
+	update_dttm timestamp NULL
 );
