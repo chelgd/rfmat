@@ -62,28 +62,44 @@ BEGIN
 	;
  
 ----------------------Добавление новых экземпляров сущности---------------------- 
-	insert into tech.bonds_tech
+	declare
+	arrow record;
 	
-	select 
-		null as bond_id,
-		a.name as src_id,
-		md5 (a.type         ||
-		a.nominal          ||
-		a.coupon_amount    ||
-		to_date(a.coup_paym_date, 'dd.mm.yyyy')   ||
-		to_date(a.exp_date, 'dd.mm.yyyy')) as hash,
-		'quik' as system_name,
-		'I' as dml_type,
-		now() as update_dttm
+BEGIN
+	FOR arrow IN (select max(bond_id) from tech.bonds_tech bt)..((select max(bond_id) from tech.bonds_tech bt) + (select count(*) from ods.bonds a
+																													left join tech.bonds_tech b 
+																													on a.name = b.src_id 
+																													where b.src_id is null))
+	LOOP
 	
-	from ods.bonds a
 	
-	left join tech.bonds_tech b 
-	on a.name = b.src_id 
 	
-	where b.src_id is null
+	INSERT INTO tech.bonds_tech
+		select 
+			(select max(bond_id) from tech.bonds_tech bt) + 1 as bond_id,
+			a.name as src_id,
+			md5 (a.type         ||
+			a.nominal          ||
+			a.coupon_amount    ||
+			to_date(a.coup_paym_date, 'dd.mm.yyyy')   ||
+			to_date(a.exp_date, 'dd.mm.yyyy')) as hash,
+			'quik' as system_name,
+			'I' as dml_type,
+			now() as update_dttm
+		
+		from ods.bonds a
+		
+		left join tech.bonds_tech b 
+		on a.name = b.src_id 
+		
+		where b.src_id is null	
+		limit 1
+	;
 	
-	;	
+	commit;
+	
+	END LOOP;
+	
  
  
  
