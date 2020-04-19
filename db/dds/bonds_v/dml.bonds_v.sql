@@ -14,7 +14,8 @@ BEGIN
 	from (
 	
 	select 
-		bond_id
+		bond_id,
+		update_dttm
 	from tech.bonds_tech
 	where  dml_type = 'U'
 	
@@ -47,9 +48,11 @@ BEGIN
 	on a.src_id = b.name
 	
 	where a.dml_type = 'U'
+	and DATE(a.update_dttm) = DATE(now())
 	
 	;	
 		
+----------------------Удаление версионных данных----------------------
 	
 ----------------------Обновляем записи у удалённых экземпляров сущности----------------------
 	
@@ -73,6 +76,8 @@ BEGIN
 	; 
 
 
+----------------------Вставка версионных данных----------------------
+
 ----------------------Вставляем новые экземпляры сущности---------------------- 
 
 	INSERT INTO dds.bonds_v 
@@ -92,7 +97,12 @@ BEGIN
 		b.nominal,
 		b.coupon_amount,   
 		to_date(b.coup_paym_date, 'dd.mm.yyyy') as coup_paym_date,
-		to_date(b.exp_date, 'dd.mm.yyyy') as exp_date
+		to_date(b.exp_date, 'dd.mm.yyyy') as exp_date,
+		date(now()) as valid_to_dt,
+		'5999-01-01' as valid_to_dt,
+		'I' as dml,
+		1 as act_flg		
+		
 	from base a
 	
 	left join ods.bonds b 

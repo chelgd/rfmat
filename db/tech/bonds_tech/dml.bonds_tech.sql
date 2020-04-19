@@ -1,10 +1,11 @@
+
+----------------------Обновление технических таблиц----------------------
+
 DO $do$
 	declare
 	arrow record;
 	
 BEGIN
-
-----------------------Обновлённые технических таблиц----------------------
 
 ----------------------Обновляем записи у обновлённых экземпляров сущности----------------------
 
@@ -63,6 +64,37 @@ BEGIN
 	where a.src_id = b.src_id
 	
 	;
+	
+	
+----------------------Выделение не обновлённых экземпляров сущности----------------------
+
+	update tech.bonds_tech a
+	
+	set dml_type = 'NC'
+
+	from (
+		with base as (select 
+			a.name,
+			md5 (a.type         ||
+			a.nominal          ||
+			a.coupon_amount    ||
+			to_date(a.coup_paym_date, 'dd.mm.yyyy')   ||
+			to_date(a.exp_date, 'dd.mm.yyyy')) as ods_hash 
+		from ods.bonds a )
+		
+		select 
+			b.src_id
+		from base a 
+		
+		inner join tech.bonds_tech b 
+		on a.name = b.src_id 
+		and a.ods_hash = b.hash		
+		
+	) b
+	
+	where a.src_id = b.src_id
+	
+	;
  
 ----------------------Добавление новых экземпляров сущности---------------------- 
 	
@@ -99,6 +131,7 @@ BEGIN
 	;
 	
 	commit;
+	
 	
 END LOOP;
  
