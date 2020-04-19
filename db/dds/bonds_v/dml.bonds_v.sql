@@ -48,7 +48,6 @@ BEGIN
 	on a.src_id = b.name
 	
 	where a.dml_type = 'U'
-	and DATE(a.update_dttm) = DATE(now())
 	
 	;	
 		
