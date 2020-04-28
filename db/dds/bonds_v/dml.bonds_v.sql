@@ -8,7 +8,6 @@ BEGIN
 	update dds.bonds_v a
 	
 	set valid_to_dt = DATE(now()),
-	dml = 'U',
 	act_flg = 0
 	
 	from (
@@ -40,7 +39,7 @@ BEGIN
 		to_date(b.exp_date, 'dd.mm.yyyy') as exp_date,
 		DATE(now()) as valid_from_dt,
 		'5999-01-01' as valid_to_dt,
-		'I' as dml,
+		'U' as dml,
 		1 as act_flg
 
 	from tech.bonds_tech a
@@ -59,7 +58,6 @@ BEGIN
 	update dds.bonds_v a
 	
 	set valid_to_dt = DATE(now()),
-	dml = 'D',
 	act_flg = 0
 	
 	from (
@@ -74,6 +72,35 @@ BEGIN
 	where a.bond_id = b.bond_id
 
 	; 
+
+----------------------Вставляем удаливший флаг удалённых экземпляров сущности----------------------
+
+	insert into dds.bonds_v
+	select 
+	
+		a.bond_id,
+		b.isin,
+		b.name,
+		b.type,
+		b.nominal,
+		b.coupon_amount,
+		to_date(b.coup_paym_date, 'dd.mm.yyyy') as coup_paym_date,
+		to_date(b.exp_date, 'dd.mm.yyyy') as exp_date,
+		DATE(now()) as valid_from_dt,
+		'5999-01-01' as valid_to_dt,
+		'D' as dml,
+		1 as act_flg
+
+	from tech.bonds_tech a
+	
+	left join ods.bonds b
+	on a.src_id = b.isin
+	
+	where a.dml_type = 'D'
+	
+	;	
+
+
 
 
 ----------------------Вставка версионных данных----------------------
