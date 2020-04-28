@@ -1,5 +1,6 @@
 
 CREATE TABLE ods.quik_bonds (
+	isin test NULL,
 	"name" text NULL,
 	"type" text NULL,
 	nominal int8 NULL,
