@@ -1,8 +1,9 @@
 insert into tech.bonds_tech 
 select 
 bond_id,
-name as src_id,
-md5(type         ||
+isin as src_id,
+md5(name		 ||
+type             ||
 nominal          ||
 coupon_amount    ||
 coup_paym_date   ||
