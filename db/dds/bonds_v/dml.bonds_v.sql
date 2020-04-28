@@ -31,6 +31,7 @@ BEGIN
 	select 
 	
 		a.bond_id,
+		b.isin,
 		b.name,
 		b.type,
 		b.nominal,
@@ -45,7 +46,7 @@ BEGIN
 	from tech.bonds_tech a
 	
 	left join ods.bonds b
-	on a.src_id = b.name
+	on a.src_id = b.isin
 	
 	where a.dml_type = 'U'
 	
@@ -91,6 +92,7 @@ BEGIN
 	
 	select 
 		a.bond_id,
+		b.isin,
 		b.name,
 		b.type,
 		b.nominal,
@@ -105,7 +107,7 @@ BEGIN
 	from base a
 	
 	left join ods.bonds b 
-	on a.src_id = b.name
+	on a.src_id = b.isin
 	;
 	
 
