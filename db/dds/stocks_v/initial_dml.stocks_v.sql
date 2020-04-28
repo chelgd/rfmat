@@ -1,6 +1,9 @@
 DO $do$
 BEGIN
-
+	
+	truncate dds.bonds_v
+	;
+	
 	insert into dds.bonds_v
 	select
 		row_number () over () as bond_id,
