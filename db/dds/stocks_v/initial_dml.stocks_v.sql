@@ -1,10 +1,10 @@
 DO $do$
 BEGIN
 	
-	truncate dds.bonds_v
+	truncate dds.stocks_v
 	;
 	
-	insert into dds.bonds_v
+/* 	insert into dds.stocks_v
 	select
 		row_number () over () as bond_id,
 		name,
@@ -16,7 +16,7 @@ BEGIN
 		'I' as dml,
 		1 as act_flg
 	from ods.quik_stocks
-	;
+	; */
 
  
 END;
