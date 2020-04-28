@@ -1,6 +1,7 @@
 insert into dds.bonds_v
 select
 row_number () over () as bond_id,
+isin,
 name,
 type,
 nominal,
