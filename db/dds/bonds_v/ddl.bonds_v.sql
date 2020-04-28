@@ -1,5 +1,6 @@
 CREATE TABLE dds.bonds_v (
 	bond_id int8 NULL,
+	isin text null,
 	name text NULL,
 	"type" text NULL,
 	nominal int8 NULL,
