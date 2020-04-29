@@ -44,7 +44,7 @@ BEGIN
 
 	from tech.bonds_tech a
 	
-	left join ods.bonds b
+	left join ods.quik_bonds b
 	on a.src_id = b.isin
 	
 	where a.dml_type = 'U'
@@ -93,7 +93,7 @@ BEGIN
 
 	from tech.bonds_tech a
 	
-	left join ods.bonds b
+	left join ods.quik_bonds b
 	on a.src_id = b.isin
 	
 	where a.dml_type = 'D'
@@ -133,7 +133,7 @@ BEGIN
 		
 	from base a
 	
-	left join ods.bonds b 
+	left join ods.quik_bonds b 
 	on a.src_id = b.isin
 	;
 	
