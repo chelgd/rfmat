@@ -20,12 +20,14 @@ BEGIN
 	
 		with base as (select 
 			a.isin,
-			md5 (a.name        ||
-			a.type        	   ||
-			a.nominal          ||
-			a.coupon_amount    ||
-			to_date(a.coup_paym_date, 'dd.mm.yyyy')   ||
-			to_date(a.exp_date, 'dd.mm.yyyy')) as ods_hash 
+			md5 (
+			coalesce(a.name, 'none')        								  ||
+			coalesce(a.type, 'none')        	  							  ||
+			coalesce(a.nominal, 0)          								  ||
+			coalesce(a.coupon_amount, 0)   									  ||
+			coalesce(to_date(a.coup_paym_date, 'dd.mm.yyyy'), '5999-01-01')   ||
+			coalesce(to_date(a.exp_date, 'dd.mm.yyyy'), '5999-01-01') 
+			) as ods_hash 
 		from ods.bonds a )
 		
 		select 
@@ -76,12 +78,14 @@ BEGIN
 	from (
 		with base as (select 
 			a.isin,
-			md5 (a.name        ||
-			a.type             ||
-			a.nominal          ||
-			a.coupon_amount    ||
-			to_date(a.coup_paym_date, 'dd.mm.yyyy')   ||
-			to_date(a.exp_date, 'dd.mm.yyyy')) as ods_hash 
+			md5 (
+			coalesce(a.name, 'none')        								  ||
+			coalesce(a.type, 'none')        	  							  ||
+			coalesce(a.nominal, 0)          								  ||
+			coalesce(a.coupon_amount, 0)   									  ||
+			coalesce(to_date(a.coup_paym_date, 'dd.mm.yyyy'), '5999-01-01')   ||
+			coalesce(to_date(a.exp_date, 'dd.mm.yyyy'), '5999-01-01') 
+			) as ods_hash 
 		from ods.bonds a )
 		
 		select 
@@ -114,12 +118,14 @@ BEGIN
 		select 
 			(select max(bond_id) from tech.bonds_tech bt) + 1 as bond_id,
 			a.isin as src_id,
-			md5 (a.name		   ||
-			a.type             ||
-			a.nominal          ||
-			a.coupon_amount    ||
-			to_date(a.coup_paym_date, 'dd.mm.yyyy')   ||
-			to_date(a.exp_date, 'dd.mm.yyyy')) as hash,
+			md5 (
+			coalesce(a.name, 'none')        								  ||
+			coalesce(a.type, 'none')        	  							  ||
+			coalesce(a.nominal, 0)          								  ||
+			coalesce(a.coupon_amount, 0)   									  ||
+			coalesce(to_date(a.coup_paym_date, 'dd.mm.yyyy'), '5999-01-01')   ||
+			coalesce(to_date(a.exp_date, 'dd.mm.yyyy'), '5999-01-01') 
+			) as hash,
 			'quik' as system_name,
 			'I' as dml_type,
 			now() as update_dttm
