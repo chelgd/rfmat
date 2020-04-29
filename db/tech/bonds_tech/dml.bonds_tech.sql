@@ -28,7 +28,7 @@ BEGIN
 			coalesce(to_date(a.coup_paym_date, 'dd.mm.yyyy'), '5999-01-01')   ||
 			coalesce(to_date(a.exp_date, 'dd.mm.yyyy'), '5999-01-01') 
 			) as ods_hash 
-		from ods.bonds a )
+		from ods.quik_bonds a )
 		
 		select 
 			b.src_id,
@@ -58,7 +58,7 @@ BEGIN
 			a.src_id
 		from tech.bonds_tech a
 		
-		left join ods.bonds b 
+		left join ods.quik_bonds b 
 		on a.src_id = b.isin
 		
 		where b.isin is null 
@@ -86,7 +86,7 @@ BEGIN
 			coalesce(to_date(a.coup_paym_date, 'dd.mm.yyyy'), '5999-01-01')   ||
 			coalesce(to_date(a.exp_date, 'dd.mm.yyyy'), '5999-01-01') 
 			) as ods_hash 
-		from ods.bonds a )
+		from ods.quik_bonds a )
 		
 		select 
 			b.src_id
@@ -106,7 +106,7 @@ BEGIN
 	
 
 	
-	FOR arrow IN (select max(bond_id) from tech.bonds_tech bt)..((select max(bond_id) from tech.bonds_tech bt) + (select count(*) from ods.bonds a
+	FOR arrow IN (select max(bond_id) from tech.bonds_tech bt)..((select max(bond_id) from tech.bonds_tech bt) + (select count(*) from ods.quik_bonds a
 																													left join tech.bonds_tech b 
 																													on a.isin = b.src_id 
 																													where b.src_id is null))
@@ -130,7 +130,7 @@ BEGIN
 			'I' as dml_type,
 			now() as update_dttm
 		
-		from ods.bonds a
+		from ods.quik_bonds a
 		
 		left join tech.bonds_tech b 
 		on a.isin = b.src_id 
