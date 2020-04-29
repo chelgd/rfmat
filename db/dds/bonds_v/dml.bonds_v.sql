@@ -16,7 +16,7 @@ BEGIN
 		bond_id,
 		update_dttm
 	from tech.bonds_tech
-	where  dml_type = 'U'
+	where  dml = 'U'
 	
 	) b
 	
@@ -47,7 +47,7 @@ BEGIN
 	left join ods.quik_bonds b
 	on a.src_id = b.isin
 	
-	where a.dml_type = 'U'
+	where a.dml = 'U'
 	
 	;	
 		
@@ -65,7 +65,7 @@ BEGIN
 	select 
 		bond_id
 	from tech.bonds_tech
-	where  dml_type = 'D'
+	where  dml = 'D'
 	
 	) b
 	
@@ -96,7 +96,7 @@ BEGIN
 	left join ods.quik_bonds b
 	on a.src_id = b.isin
 	
-	where a.dml_type = 'D'
+	where a.dml = 'D'
 	
 	;	
 
@@ -111,7 +111,7 @@ BEGIN
 
 	from tech.bonds_tech b
 	
-	where b.dml_type = 'I'
+	where b.dml = 'I'
 	and a.dml = 'D'
 	
 	;

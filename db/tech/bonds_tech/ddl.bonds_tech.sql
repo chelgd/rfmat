@@ -3,6 +3,6 @@ CREATE TABLE tech.bonds_tech (
 	src_id text NULL,
 	hash text NULL,
 	sytsem_name text null,
-	dml_type text null,
+	dml text null,
 	update_dttm timestamp NULL
 );

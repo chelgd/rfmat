@@ -11,7 +11,7 @@ BEGIN
 		lot            ||
 		class_code) as hash,
 		'quik' as system_name,
-		'I' as dml_type,
+		'I' as dml,
 		now() as update_dttm
 	from dds.stocks_v
 	; */

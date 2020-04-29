@@ -17,7 +17,7 @@ BEGIN
 		coalesce(exp_date, '5999-01-01') 
 		) as hash,
 		'quik' as system_name,
-		'I' as dml_type,
+		'I' as dml,
 		now() as update_dttm		
 	from dds.bonds_v
 	;

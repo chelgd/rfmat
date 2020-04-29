@@ -12,7 +12,7 @@ BEGIN
 	update tech.bonds_tech a
 	
 	set hash = b.ods_hash,
-	dml_type = 'U',
+	dml = 'U',
 	update_dttm = now()
 	
 	
@@ -50,7 +50,7 @@ BEGIN
 
 	update tech.bonds_tech a
 	
-	set dml_type = 'D',
+	set dml = 'D',
 	update_dttm = now()
 
 	from (
@@ -73,7 +73,7 @@ BEGIN
 
 	update tech.bonds_tech a
 	
-	set dml_type = 'NC'
+	set dml = 'NC'
 
 	from (
 		with base as (select 
@@ -127,7 +127,7 @@ BEGIN
 			coalesce(to_date(a.exp_date, 'dd.mm.yyyy'), '5999-01-01') 
 			) as hash,
 			'quik' as system_name,
-			'I' as dml_type,
+			'I' as dml,
 			now() as update_dttm
 		
 		from ods.quik_bonds a
