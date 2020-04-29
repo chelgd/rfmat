@@ -8,12 +8,14 @@ BEGIN
 	select 
 		bond_id,
 		isin as src_id,
-		md5(name		 ||
-		type             ||
-		nominal          ||
-		coupon_amount    ||
-		coup_paym_date   ||
-		exp_date) as hash,
+		md5 (
+		coalesce(name, 'none')        								  ||
+		coalesce(type, 'none')        	  							  ||
+		coalesce(nominal, 0)          								  ||
+		coalesce(coupon_amount, 0)   									  ||
+		coalesce(coup_paym_date, '5999-01-01')   ||
+		coalesce(exp_date, '5999-01-01') 
+		) as hash,
 		'quik' as system_name,
 		'I' as dml_type,
 		now() as update_dttm		
