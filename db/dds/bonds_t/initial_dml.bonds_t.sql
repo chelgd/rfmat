@@ -1,6 +1,9 @@
 DO $do$
 BEGIN
 
+	truncate dds.bonds_t
+	;
+
 	insert into dds.bonds_t 
 	select
 		b.bond_id,
