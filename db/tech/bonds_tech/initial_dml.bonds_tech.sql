@@ -13,8 +13,8 @@ BEGIN
 		coalesce(type, 'none')        	  							  ||
 		coalesce(nominal, 0)          								  ||
 		coalesce(coupon_amount, 0)   									  ||
-		coalesce(to_date(coup_paym_date, 'dd.mm.yyyy'), '5999-01-01')   ||
-		coalesce(to_date(exp_date, 'dd.mm.yyyy'), '5999-01-01') 
+		coalesce(coup_paym_date, '5999-01-01')   ||
+		coalesce(exp_date, '5999-01-01') 
 		) as hash,
 		'quik' as system_name,
 		'I' as dml_type,
