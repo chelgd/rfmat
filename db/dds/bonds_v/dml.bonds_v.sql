@@ -79,22 +79,19 @@ BEGIN
 	select 
 	
 		a.bond_id,
-		b.isin,
-		b.name,
-		b.type,
-		b.nominal,
-		b.coupon_amount,
-		to_date(b.coup_paym_date, 'dd.mm.yyyy') as coup_paym_date,
-		to_date(b.exp_date, 'dd.mm.yyyy') as exp_date,
+		NULL as isin,
+		NULL as name,
+		NULL as type,
+		NULL as nominal,
+		NULL as coupon_amount,
+		NULL as coup_paym_date,
+		NULL as exp_date,
 		DATE(now()) as valid_from_dt,
 		'5999-01-01' as valid_to_dt,
 		'D' as dml,
 		0 as act_flg
 
 	from tech.bonds_tech a
-	
-	left join ods.quik_bonds b
-	on a.src_id = b.isin
 	
 	where a.dml = 'D'
 	
@@ -111,7 +108,8 @@ BEGIN
 
 	from tech.bonds_tech b
 	
-	where b.dml = 'I'
+	where a.bond_id = b.bond_id 
+	and b.dml = 'I'
 	and a.dml = 'D'
 	
 	;
